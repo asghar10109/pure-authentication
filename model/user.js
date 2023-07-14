@@ -17,11 +17,14 @@ const userModel = new mongoose.Schema({
         required: true,
          
     },
+    dob:{
+        type:String,
+        required: true,
+    },
     phone:{
         type:String,
         required: true,
-        unique : true,
-        
+        unique : true, 
         
     },
     avators:[{

@@ -1,7 +1,7 @@
 const userModel = require('../model/user')
 const CryptoJS = require("crypto-js");
 const Login_Token_Authentication = require('../middleware/loginjwt')
-
+const moment = require('moment')
 const createUser = async (req, res, next) => {
     try {
         const emailValidation = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -42,10 +42,12 @@ const createUser = async (req, res, next) => {
             }
             else {
                 const random = Math.floor(Math.random() * 1000);
+                const db = moment(req.body.dob, "YYYY-MM-DD").toDate();
                 const newUser = new userModel({
                     username: req.body.username,
                     email: req.body.email,
                     password: CryptoJS.AES.encrypt(req.body.password, process.env.Secret_password).toString(),
+                    dob: db,
                     phone: req.body.phone,
                     avators: userAvator,
                     otp: `${random}`
