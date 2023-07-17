@@ -143,7 +143,7 @@ const EditProfile = async (req, res, next) => {
     try {
 
         const userAvator = req?.files?.avators?.map((data) => data?.path?.replace(/\\/g, "/"))
-
+        const db = moment(req.body.dob, "YYYY-MM-DD").toDate();
 
         if (!phone === undefined && !phone.match(/^[0-9]{11}$/)) {
             return res.send({
@@ -153,7 +153,7 @@ const EditProfile = async (req, res, next) => {
         }
         else {
 
-            const data = await userModel.updateOne({ _id: Id }, { $set: { username: username, phone: phone, avators: userAvator, } })
+            const data = await userModel.updateOne({ _id: Id }, { $set: { username: username, phone: phone, avators: userAvator, dob:db, user_is_profile_complete:true} },{ new: true })
 
             res.send({
                 message: "Data updated",
@@ -356,6 +356,61 @@ const notificationToggle= async (req, res, next) => {
         });
     }
 }
+
+const softDelete = async (req, res, next) => {
+    try {
+        const email = req.body.email;
+        const is_blocked = req.body.is_blocked;
+        const is_profile_deleted = req.body.is_profile_deleted;
+        console.log(email, is_blocked, is_profile_deleted);
+    
+        const user = await userModel.findOne({ email: email });
+        console.log(user);
+    
+        if (user) {
+          if (is_blocked !== undefined) {
+            user.is_blocked = is_blocked;
+            await user.save();
+            res.send({
+              message: user.is_blocked === true
+                ? `This user ${user.username} is blocked successfully`
+                : `This user ${user.username} is unblocked successfully`,
+              status: 200,
+              data:user
+            });
+          } 
+          else if (is_profile_deleted !== undefined) {
+            user.is_profile_deleted = is_profile_deleted;
+            await user.save();
+            res.send({
+              message: user.is_profile_deleted === true
+                ? `This user ${user.username} is deleted successfully`
+                : `This user ${user.username} is not deleted successfully`,
+              status: 200,
+              data:user
+            });
+          } 
+          else {
+            res.status(400).send({
+              message: `Missing required fields for update`,
+              status: 400,
+            });
+          }
+        } 
+        else {
+          res.status(404).send({
+            message: `User with email ${email} not found`,
+            status: 400,
+          });
+        }
+      } catch (err) {
+        res.status(500).send({
+          message: err.message,
+          status: 500,
+        });
+      }
+}
+
 module.exports = {
     createUser,
     LoginUser,
@@ -366,5 +421,6 @@ module.exports = {
     forgetPassword,
     resetPassword,
     logout,
-    notificationToggle
+    notificationToggle,
+    softDelete
 }

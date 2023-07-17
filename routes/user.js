@@ -11,7 +11,8 @@ const {
     forgetPassword,
     resetPassword,
     logout,
-    notificationToggle
+    notificationToggle,
+    softDelete
 } = require('../controller/user')
 
 UserRouter.post('/createUsers', multer.upload , createUser)
@@ -32,6 +33,9 @@ UserRouter.post('/resetpassword', resetPassword);
 
 UserRouter.post('/logout',Auth, logout);
 
+UserRouter.put('/deleteuserprofile', softDelete);
+
 UserRouter.put('/notificationtoggle',Auth, notificationToggle);
+
 
 module.exports = UserRouter

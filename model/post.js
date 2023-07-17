@@ -8,7 +8,7 @@ const postModel = new mongoose.Schema({
     description:{
         type:String
     },
-    avators: [{
+    post_image: [{
       type: String
     }],
     videos: [{

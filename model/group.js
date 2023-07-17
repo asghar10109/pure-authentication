@@ -7,13 +7,17 @@ const groupModel = new mongoose.Schema({
     description:{
         type:String
     },
-    coverimage:{
+    coverimage:[{
         type:String
+    }],
+    
+    group_types: {
+        type: String,
+        enum: ['public', 'private'],
+        default: 'public',
     },
-    group_types:{
-        type:Boolean,
-        default : true
-    },
+
+
     members:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'

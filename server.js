@@ -14,11 +14,12 @@ app.use(cors())
 const userRoutes = require('./routes/user')
 app.use('/demo/user/',userRoutes)
 
+const groupRoutes = require('./routes/group')
+app.use('/demo/group/',groupRoutes)
+
 // const postRoutes = require('./routes/post')
 // app.use('/demo/post/',postRoutes)
 
-// const groupRoutes = require('./routes/group')
-// app.use('/demo/group/',groupRoutes)
 
 
 app.use('/ ', express.static(process.cwd() + '/public'))
