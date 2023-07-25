@@ -27,10 +27,10 @@ const userModel = new mongoose.Schema({
         unique : true, 
         
     },
-    avators:[{
+    avators:{
         type:String,
         required: true
-    }],
+    },
     otp:{
         type:String,
         
@@ -52,7 +52,8 @@ const userModel = new mongoose.Schema({
         default:false
     },
     user_authentication:{
-        type:String,
+        type: String,
+        default: null
         
     },
     user_social_token:{

@@ -5,7 +5,7 @@ const userTokenAuthentication = async (req,res,next) => {
 
     const token = req.headers['authorization'].split(" ")[1];
     const user = await userModel.findOne({user_authentication:token})
-
+    
     if(!token){
         return  res.send
         ({ message:"token is expired you are still un-Authorized" ,status:400})
@@ -24,7 +24,8 @@ const userTokenAuthentication = async (req,res,next) => {
         try{
             const decoded =  jwt.verify(token , process.env.Secret_JWT)
             
-            req.id = decoded._id
+           
+            req.id = decoded.id
             
             next();
             

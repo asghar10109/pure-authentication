@@ -1,15 +1,16 @@
 const GroupRouter = require('express').Router()
-const multer = require('../middleware/multer');
+const upload = require('../middleware/multer');
 const Auth = require('../middleware/Auth');
 const {
     createGroup,
-    joinGroup
+    joinGroup,
+    acceptJoinRequest
 
 } = require('../controller/group')
 
-GroupRouter.post('/creategroup', multer.upload , createGroup)
+GroupRouter.post('/creategroup',upload.single('coverimage') , createGroup)
 GroupRouter.post('/joingroup', joinGroup)
-
+GroupRouter.post('/joinrequest', acceptJoinRequest)
 
 
 module.exports = GroupRouter

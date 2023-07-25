@@ -43,6 +43,10 @@ const postModel = new mongoose.Schema({
     group:{
         type:mongoose.Types.ObjectId,
         ref:'Group'
+    },
+    user:{
+        type:mongoose.Types.ObjectId,
+        ref:'User'
     }
     
 },

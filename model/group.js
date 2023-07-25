@@ -7,9 +7,9 @@ const groupModel = new mongoose.Schema({
     description:{
         type:String
     },
-    coverimage:[{
+    coverimage:{
         type:String
-    }],
+    },
     
     group_types: {
         type: String,

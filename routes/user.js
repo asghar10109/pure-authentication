@@ -1,5 +1,5 @@
 const UserRouter = require('express').Router()
-const multer = require('../middleware/multer');
+const upload = require('../middleware/multer')
 const Auth = require('../middleware/Auth');
 const {
     createUser,
@@ -15,15 +15,15 @@ const {
     softDelete
 } = require('../controller/user')
 
-UserRouter.post('/createUsers', multer.upload , createUser)
+UserRouter.post('/createUsers', upload.single('avators'),  createUser)
 
 UserRouter.post('/login',   LoginUser)
 
 UserRouter.post('/profile', Auth , Profile)
 
-UserRouter.put('/EditProfile', Auth , multer.upload, EditProfile)
+UserRouter.put('/EditProfile', Auth , upload.single('avators'), EditProfile)
 
-UserRouter.post('/otpverification',Auth, OtpCheck);
+UserRouter.post('/otpverification', OtpCheck);
 
 UserRouter.delete('/deleteaccount',Auth, deleteUsers);
 
